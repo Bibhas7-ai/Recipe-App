@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "167646010025",
+    "firebase_url": "https://food-a794e-default-rtdb.firebaseio.com",
+    "project_id": "food-a794e",
+    "storage_bucket": "food-a794e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:167646010025:android:d9d3067c390f4467bf67b8",
+        "android_client_info": {
+          "package_name": "com.example.food"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFRq1GBapPuGeWXzRDxqNSzHCqsknu3l0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
