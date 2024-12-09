@@ -261,8 +261,10 @@
 // updated codeimport 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:food/constants/constant_colors.dart';
+import 'package:food/provider/login_provider.dart';
 import 'package:food/provider/recipe_provider.dart';
 import 'package:food/screens/recipe_details_screen.dart';
+
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -280,13 +282,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<RecipeProvider>(context, listen: false).fetchRecipes());
+    Provider.of<RecipeProvider>(context, listen: false).fetchRecipes();
   }
 
   @override
   Widget build(BuildContext context) {
     final recipeProvider = Provider.of<RecipeProvider>(context);
+    final _auth = LoginProvider();
 
     final filteredRecipes = recipeProvider.recipes
         .where((recipe) =>
@@ -299,6 +301,20 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const Text("Home"),
           automaticallyImplyLeading: false,
           centerTitle: true,
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await _auth.signout();
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  '/',
+                  (route) => false,
+                );
+              },
+              icon: const Icon(Icons.logout),
+              tooltip: 'Logout',
+            ),
+          ],
         ),
         backgroundColor: ConstantColors.backgroundColor,
         body: Column(
@@ -349,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: GridView.builder(
                             itemCount: filteredRecipes.length,
                             gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
                               crossAxisSpacing: 10,
                               mainAxisSpacing: 10,

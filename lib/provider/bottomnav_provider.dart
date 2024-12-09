@@ -7,7 +7,9 @@ class NavbarProvider with ChangeNotifier {
   List<NavbarDTO> items = [
     NavbarDTO(label: 'home', widget: const HomeScreen(), iconData: Icons.home),
     NavbarDTO(
-        label: 'Favorites', widget: const FavoriteScreen(), iconData: Icons.favorite),
+        label: 'Favorites',
+        widget: const FavoriteScreen(),
+        iconData: Icons.favorite),
     NavbarDTO(
         label: 'Profile',
         widget: const ProfileScreen(),

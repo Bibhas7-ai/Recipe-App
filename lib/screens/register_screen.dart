@@ -15,43 +15,97 @@ class RegisterScreen extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                  hintText: 'Enter your Email Here', labelText: 'Email'),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                RichText(
+                  text: const TextSpan(
+                      text: 'Did You SignUp ? ',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black,
+                      ),
+                      children: [
+                        TextSpan(
+                            text: ' SignUp now to  \n ',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        TextSpan(
+                          text: 'Learn New  ',
+                          style: TextStyle(
+                            fontSize: 40,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                        TextSpan(
+                            text: ' Recipes 😋 ',
+                            style: TextStyle(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ]),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                TextFormField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Email Here',
+                      labelText: 'Email'),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  controller: passwordController,
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your Password Here',
+                      labelText: 'Password'),
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await registerProvider.registerUser(
+                          emailController.text, passwordController.text);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            content: Text('Registration successful')),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $e')),
+                      );
+                    }
+                  },
+                  child: const Text('Register'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/',
+                      (route) => false,
+                    );
+                  },
+                  child: const Text('Already Signed Up?'),
+                )
+              ],
             ),
-            TextFormField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                  hintText: 'Enter your Password Here', labelText: 'Password'),
-              obscureText: true,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await registerProvider.registerUser(
-                      emailController.text, passwordController.text);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Registration successful')),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Error: $e')),
-                  );
-                }
-              },
-              child: const Text('Register'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/login');
-              },
-              child: const Text('Already Signed Up?'),
-            )
-          ],
+          ),
         ),
       ),
     );

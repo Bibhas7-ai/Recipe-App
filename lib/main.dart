@@ -6,12 +6,12 @@ import 'package:food/provider/profile_provider.dart';
 
 import 'package:food/provider/recipe_provider.dart';
 
-
 import 'package:food/screens/login_screen.dart';
 import 'package:food/screens/nav_screen.dart';
 import 'package:food/screens/profile_screen.dart';
 
 import 'package:food/screens/register_screen.dart';
+import 'package:food/wrapper.dart';
 
 import 'package:provider/provider.dart';
 
@@ -43,12 +43,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/wrapper',
       routes: {
         '/': (context) => const LoginScreen(),
+        '/wrapper': (context) => const Wrapper(),
         '/navscreen': (context) => const NavScreen(),
         '/register': (context) => const RegisterScreen(),
-
         '/profile': (context) => const ProfileScreen(),
       },
     );

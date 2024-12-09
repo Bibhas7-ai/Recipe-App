@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:food/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:food/provider/profile_provider.dart';
 import 'package:food/constants/constant_colors.dart';
@@ -28,6 +30,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final userProvider = Provider.of<UserProvider>(context);
+    final _auth = LoginProvider();
 
     return Scaffold(
       appBar: AppBar(
@@ -36,8 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         title: const Text('Profile Page'),
         actions: [
           IconButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/');
+            onPressed: () async {
+              await _auth.signout();
             },
             icon: const Icon(Icons.logout),
             tooltip: 'Logout',

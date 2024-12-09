@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class RegisterProvider with ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,6 +14,8 @@ class RegisterProvider with ChangeNotifier {
       throw Exception(e.toString());
     }
   }
+
+  void register() {}
 }
 
 class LoginProvider with ChangeNotifier {
@@ -30,11 +33,38 @@ class LoginProvider with ChangeNotifier {
       );
 
       // Navigate to the HomeScreen on success
-      Navigator.pushReplacementNamed(context, '/navscreen');
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        '/navscreen',
+        (route) => false,
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Login Failed: ${e.toString()}')),
       );
+    }
+  }
+
+  Future<UserCredential?> loginWithGoogle() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+      var a = await _auth.signInWithCredential(cred);
+      return a;
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
+
+  Future<void> signout() async {
+    try {
+      await GoogleSignIn().signOut();
+      await _auth.signOut();
+    } catch (e) {
+      print(e.toString());
     }
   }
 }
